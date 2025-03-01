@@ -9,6 +9,7 @@ lerna-debug.log*
 
 node_modules/
 ledger-frontend/node_modules/
+expense-ledger-backend/node_modules/
 .env
 dist
 dist-ssr
