@@ -5,7 +5,7 @@ const TimeStamp = () => {
   const [currentTime, setCurrentTime] = useState(new Date().toLocaleString());
 
   useEffect(() => {
-    const interval = setInterval(() => setCurrentTime(new Date().toLocaleString()), 1000); //1000 - milliseconds is a second, 60000 ms is a one minute
+    const interval = setInterval(() => setCurrentTime(new Date().toLocaleString()), 1000); //1000 - milliseconds is a second, 60000 ms is one minute
 
     return () => clearInterval(interval);
   }, []);

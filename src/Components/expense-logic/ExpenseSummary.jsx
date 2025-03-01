@@ -1,4 +1,4 @@
-import "./ExpenseSummary.css";
+import "./styles/ExpenseSummary.css";
 
 const ExpenseSummary = ({ expenses = [] }) => {
   const expenseCount = expenses.length;

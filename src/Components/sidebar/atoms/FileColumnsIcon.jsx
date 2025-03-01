@@ -1,6 +1,6 @@
 import React from "react";
 import { TbColumns } from "react-icons/tb";
-import "./SideBar.css";
+import "../styles/SideBar.css";
 const FileColumnsIcon = () => {
   return (
     <div>

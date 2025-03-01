@@ -1,6 +1,6 @@
 import Filter from "./Filter";
 import { useContext } from "react";
-import { ExpensesContext } from "../../ContextProvider";
+import { ExpensesContext } from "../ContextProvider";
 
 export const SortedExpenseCategories = ({ selectedCategory }) => {
   const { expenses } = useContext(ExpensesContext);

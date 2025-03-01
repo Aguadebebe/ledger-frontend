@@ -1,6 +1,6 @@
-import Header from "./Feature-1/Header"; // Import the Header
-import Expense from "./Feature-2/Feature-SortedCategory/Expense";
-import SideBar from "./Feature3/SideBar";
+import Header from "./header/organisms/Header"; // Import the Header
+import Expense from "./expense-logic/Expense";
+import SideBar from "./sidebar/organisms/SideBar";
 function App() {
   return (
     <div>

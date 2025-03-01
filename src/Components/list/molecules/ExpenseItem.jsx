@@ -1,4 +1,4 @@
-import "./ExpenseItem.css";
+import "../styles/ExpenseItem.css";
 
 const ExpenseItem = ({ expense, onDelete }) => {
   return (

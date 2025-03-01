@@ -1,9 +1,9 @@
 import React from "react";
-import TrashDeleteIcon from "./TrashDeleteIcon";
-import FileGridIcon from "./FileGridIcon";
-import FileColumnsIcon from "./FileColumnsIcon";
-import GetStoredExpenseData from "./GetStoredExpenseData";
-import "./SideBar.css";
+import TrashDeleteIcon from "../atoms/TrashDeleteIcon";
+import FileGridIcon from "../atoms/FileGridIcon";
+import FileColumnsIcon from "../atoms/FileColumnsIcon";
+import GetStoredExpenseData from "../molecules/GetStoredExpenseData";
+import "../styles/SideBar.css";
 const SideBar = () => {
   return (
     <div className="sidebar">

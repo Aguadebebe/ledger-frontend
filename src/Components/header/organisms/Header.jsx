@@ -1,20 +1,19 @@
-import "./Header.css";
+import "../styles/Header.css";
 import { useContext } from "react";
-import { ExpensesContext } from "../ContextProvider";
-import TimeStamp from "./TimeStamp";
-//import { RiFolderAddLine } from "react-icons/ri";
-import { SaveExpenseData } from "./SaveExpenseData";
+import { ExpensesContext } from "../../ContextProvider";
+import TimeStamp from "../atoms/TimeStamp";
+import { SaveExpenseData } from "../molecules/SaveExpenseData";
 const Header = () => {
   const { clearDisplayedExpenses } = useContext(ExpensesContext);
   return (
     <>
       <header className="header-section header-bar bg-primary mb-4">
         <div className="container d-flex flex-column flex-md-row align-items-center p-3">
-          <span className="header-icon-container">
+          <section className="header-icon-container">
             <SaveExpenseData clearDisplayedExpenses={clearDisplayedExpenses} />
             <h1 className="header-title my-0 mr-md-auto font-weight-normal">Expense Ledger</h1>
             <TimeStamp />
-          </span>
+          </section>
         </div>
       </header>
     </>

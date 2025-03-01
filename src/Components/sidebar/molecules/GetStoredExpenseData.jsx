@@ -1,5 +1,5 @@
 import { useEffect, useState, useContext } from "react";
-import { ExpensesContext } from "../ContextProvider";
+import { ExpensesContext } from "../../ContextProvider";
 import Axios from "axios";
 import { Fa0, Fa1, Fa2, Fa3 } from "react-icons/fa6";
 const GetStoredExpenseData = () => {

@@ -1,8 +1,8 @@
 import { SortedExpenseCategories } from "./SortedExpenseCategories";
 import { StoredExpenses } from "./StoredExpenses";
-import ExpenseList from "../Feature-List/ExpenseList";
+import ExpenseList from "../list/molecules/ExpenseList";
 import ExpenseSummary from "./ExpenseSummary";
-import ExpenseFormHandler from "../Feature-Form/ExpenseFormHandler";
+import ExpenseFormHandler from "../form/molecules/ExpenseFormHandler";
 import { useContext } from "react";
 import { ExpensesContext } from "../../ContextProvider";
 

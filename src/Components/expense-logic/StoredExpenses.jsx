@@ -1,5 +1,5 @@
 import { useEffect, useContext } from "react";
-import { ExpensesContext } from "../../ContextProvider";
+import { ExpensesContext } from "../ContextProvider";
 
 export const StoredExpenses = () => {
   const { expenses, setExpenses } = useContext(ExpensesContext);

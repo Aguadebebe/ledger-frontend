@@ -1,4 +1,4 @@
-import "./Filter.css";
+import "./styles/Filter.css";
 const Filter = (props) => {
   return (
     <div>

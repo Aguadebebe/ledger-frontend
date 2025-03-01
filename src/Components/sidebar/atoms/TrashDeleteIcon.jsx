@@ -1,6 +1,6 @@
 import React from "react";
 import { FaRegTrashCan } from "react-icons/fa6";
-import "./SideBar.css";
+import "../styles/SideBar.css";
 const TrashDeleteIcon = () => {
   return (
     <div>

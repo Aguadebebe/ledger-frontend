@@ -1,5 +1,5 @@
 import { useContext } from "react";
-import { ExpensesContext } from "../ContextProvider";
+import { ExpensesContext } from "../../ContextProvider";
 import { RiFolderAddLine } from "react-icons/ri";
 
 export const SaveExpenseData = () => {

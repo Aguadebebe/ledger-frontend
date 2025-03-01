@@ -1,6 +1,6 @@
 import React from "react";
 import { RiGalleryView2 } from "react-icons/ri";
-import "./SideBar.css";
+import "../styles/SideBar.css";
 const FileGridIcon = () => {
   return (
     <div>
