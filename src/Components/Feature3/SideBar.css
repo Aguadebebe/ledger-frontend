@@ -1,0 +1,35 @@
+/* Sidebar.css */
+.sidebar {
+  /* Sidebar takes up 1 part of the space */
+  max-width: 18vw; /* Prevents sidebar from growing too large */
+  min-width: 12vw; /* Ensures it doesn't shrink too much */
+  border: 2px solid black;
+  transition: max-width 0.3s ease-in-out;
+}
+
+/* Icon container - Align icons side by side */
+.sidebar-icons-container {
+  display: flex; /* Aligns icons horizontally */
+  justify-content: space-between; /* Distributes space evenly */
+  width: 100%; /* Full width of sidebar */
+  margin-bottom: 2vh; /* Adds spacing below the icons */
+}
+
+/* Icon styling */
+.sidebar-icon {
+  font-size: 2vh; /* Adjust size of icons */
+  cursor: pointer; /* Makes icons clickable */
+  transition: transform 0.2s; /* Adds hover effect */
+}
+
+.sidebar-icon:hover {
+  transform: scale(1.1); /* Slight zoom effect on hover */
+}
+
+/* Responsive Sidebar */
+@media (max-width: 768px) {
+  .sidebar {
+    width: 100%; /* Sidebar stacks on top in smaller screens */
+    height: auto;
+  }
+}

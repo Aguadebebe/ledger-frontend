@@ -1,0 +1,11 @@
+/* Filter */
+.filter-flexbox {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-wrap: wrap;
+}
+
+.filter-category-border {
+  border: 2px solid black;
+}

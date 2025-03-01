@@ -1,0 +1,18 @@
+/* Form */
+.form-border {
+  border: 2px solid black;
+  padding: 1vh;
+}
+
+.errors {
+  color: red;
+}
+
+.add-expense-btn,
+.input-title,
+.input-expense-description,
+.enter-amount,
+.input-date,
+.select-category {
+  cursor: pointer;
+}
