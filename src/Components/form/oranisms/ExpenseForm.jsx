@@ -1,30 +1,35 @@
 import "../styles/ExpenseForm.css";
 import { useEffect } from "react";
+import FormInput from "../atoms/FormInput";
+import Description from "../atoms/Description";
+import InputDate from "../atoms/InputDate";
+import DropdownSelect from "../atoms/DropdownSelect";
+import AddExpenseBtn from "../atoms/AddExpenseBtn";
 const ExpenseForm = (props) => {
   useEffect(() => {
     console.log("Expense Category updated:", props.expenseCategory);
   }, [props.expenseCategory]); // Logs whenever `expenseCategory` is updated
 
   return (
-    <div className="form-border">
+    <section className="form-border">
       <form className="d-flex flex-column" onSubmit={props.handleFormSubmit}>
         <fieldset>
           <legend>Expense Form -</legend>
-          <input
+          <FormInput
             className="input-title form-control mb-3"
+            placeholder="Enter Title"
             value={props.expenseTitle}
             onChange={(event) => {
               props.updateExpenseTitle(event.target.value);
+
               if (props.errors.title) {
                 props.setErrors((prevErrors) => ({ ...prevErrors, title: "" }));
               }
             }}
-            placeholder="Enter Title"
           />
           {props.errors.title && <p className="errors">{props.errors.title}</p>}
 
-          <textarea
-            className="input-expense-description form-control mb-3"
+          <Description
             value={props.expenseDescription}
             onChange={(event) => {
               props.updateExpenseDescription(event.target.value);
@@ -32,12 +37,12 @@ const ExpenseForm = (props) => {
                 props.setErrors((prevErrors) => ({ ...prevErrors, description: "" }));
               }
             }}
-            placeholder="Enter Expense Description"
           />
           {props.errors.description && <p className="errors">{props.errors.description}</p>}
 
-          <input
+          <FormInput
             className="enter-amount form-control mb-3"
+            placeholder="Enter Amount $"
             value={props.expenseAmount}
             onChange={(event) => {
               props.updateExpenseAmount(event.target.value);
@@ -45,13 +50,10 @@ const ExpenseForm = (props) => {
                 props.setErrors((prevErrors) => ({ ...prevErrors, amount: "" }));
               }
             }}
-            placeholder="Enter Amount $"
           />
           {props.errors.amount && <p className="errors">{props.errors.amount}</p>}
 
-          <input
-            className="input-date form-control mb-3"
-            type="date"
+          <InputDate
             value={props.expenseDate}
             onChange={(event) => {
               props.updateExpenseDate(event.target.value);
@@ -62,8 +64,7 @@ const ExpenseForm = (props) => {
           />
           {props.errors.date && <p className="errors">{props.errors.date}</p>}
 
-          <select
-            className="select-category form-control mb-3"
+          <DropdownSelect
             value={props.expenseCategory}
             onChange={(event) => {
               props.updateExpenseCategory(event.target.value);
@@ -72,21 +73,13 @@ const ExpenseForm = (props) => {
                 props.setErrors((prevErrors) => ({ ...prevErrors, category: null })); //This is set to null so that the error message will clear
               }
             }}
-          >
-            <option>Select a Category</option>
-            <option>Bills</option>
-            <option>Auto Parts</option>
-            <option>Groceries</option>
-          </select>
+          />
 
           {props.errors.category && <p className="errors">{props.errors.category}</p>}
-
-          <button className="add-expense-btn btn-primary" type="submit">
-            Add Expense
-          </button>
+          <AddExpenseBtn />
         </fieldset>
       </form>
-    </div>
+    </section>
   );
 };
 

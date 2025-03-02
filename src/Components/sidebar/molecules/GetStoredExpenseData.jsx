@@ -1,19 +1,16 @@
 import { useEffect, useState, useContext } from "react";
 import { ExpensesContext } from "../../ContextProvider";
+import "../styles/SideBar.css";
 import Axios from "axios";
-import { Fa0, Fa1, Fa2, Fa3 } from "react-icons/fa6";
+import { TbFileDollar } from "react-icons/tb";
+import TrashDeleteIcon from "../atoms/TrashDeleteicon";
+//import { Fa0, Fa1, Fa2, Fa3 } from "react-icons/fa6";
 const GetStoredExpenseData = () => {
   const { hasSubmitted, setHasSubmitted } = useContext(ExpensesContext);
   const [fetchedJsonData, setFetchedJsonData] = useState([]);
   const [_, setServerData] = useState([]);
   //const [isIconExpanded, setIsIconExpanded] = useState(null);
-
-  const categoryIcons = {
-    Bills: <Fa0 />,
-    AutoParts: <Fa1 />,
-    Groceries: <Fa2 />,
-    default: <Fa3 />
-  };
+  const categoryIcon = <TbFileDollar className="tbdollar-icon" />;
 
   useEffect(() => {
     if (!hasSubmitted) return;
@@ -63,10 +60,11 @@ const GetStoredExpenseData = () => {
         return (
           <li key={jsonObject._id}>
             <a href={`/details/${jsonObject._id}`} style={{ fontSize: "1.3em" }}>
-              {categoryIcons[jsonObject.category] || categoryIcons.default}
+              {categoryIcon}
             </a>
+
             <button onClick={() => iconDelete(jsonObject._id)} className="btn btn-primary btn-sm">
-              Delete
+              <TrashDeleteIcon />
             </button>
           </li>
         );

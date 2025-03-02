@@ -1,5 +1,3 @@
-//import { useContext } from "react";
-//import { ExpensesContext } from "../../ExpensesContext"; // Import the context
 import { useState, useContext } from "react";
 import { ExpensesContext } from "../../ContextProvider";
 import ExpenseForm from "../oranisms/ExpenseForm";
@@ -28,6 +26,7 @@ const ExpenseFormHandler = () => {
 
   const handleFormSubmit = (event) => {
     event.preventDefault();
+    console.log("form submitted");
     setErrors(event.target.value);
 
     let newErrors = { title: "", description: "", amount: "", date: "", category: "" };

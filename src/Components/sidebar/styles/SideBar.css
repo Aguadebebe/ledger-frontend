@@ -25,6 +25,17 @@
 .sidebar-icon:hover {
   transform: scale(1.1); /* Slight zoom effect on hover */
 }
+.tbdollar-icon:hover {
+  transform: scale(1.1); /* Slight zoom effect on hover */
+}
+
+.tbdollar-icon {
+  color: rgb(42, 199, 42);
+  height: 3vh;
+  width: 3vw;
+  cursor: pointer; /* Makes icons clickable */
+  transition: transform 0.2s; /* Adds hover effect */
+}
 
 /* Responsive Sidebar */
 @media (max-width: 768px) {
