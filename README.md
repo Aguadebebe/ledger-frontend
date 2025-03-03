@@ -15,33 +15,9 @@ If you are developing a production application, we recommend using TypeScript an
 
                     EXPENSE LEDGER APP
 
-## Todo next Section
-
-//Start Trello account to write sprints and set small tasks for your project.
-
-//Start a draw.io account and learn to write flow charts from a readme file. By writing a flow chart for Ledger App.
-
-//Start 1 codewars javascript kata and work on it everyday until it's solved. Don't ask chatgpt for help!
-
-//Learn to use design templates for creating html - css layouts
-
-//Work on next feature of ledger App which is to have the saved
-
-//savefile icon be comprised of all the items sent to the db gathered as a saved file instead of just a single Expense item. Then have it displayed back to the screen if clicked on.
-
-//take out the button beside the savedfile icon.
-
-// reroute it's funtionality to the trash icon will be moved back to the top of the sidebar.
-
-// Add css selector that highlights the background of the element that the saved file icon is encaplulated in.
-
-//Connect the highlited element and file to the trash icon logic that allows the trash icon to delete the highlighted element thus it's saved file contents.
-
 ## Table of Contents
 
 -[ProjectTitle](#project-title)
-
-- [TodoSection](#todo-section)
 
 - [Description](#description)
 
@@ -69,8 +45,8 @@ This project follows the Atomic Design methodology for structuring UI components
 
 ## Installation
 
-Clone the repository: git clone https://github.com/yourusername/expense-ledger-app.git
-
+Clone the repository: git clone https://github.com/Aguadebebe/ledger-frontend.git
+Clone the repository: git clone https://github.com/Aguadebebe/expense-ledger-backend-api.git
 Navigate to the project directory: cd expense-ledger-app
 
 Install dependencies: npm install
