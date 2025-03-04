@@ -3,13 +3,25 @@ import { ExpensesContext } from "../../ContextProvider";
 import "../styles/SideBar.css";
 import Axios from "axios";
 import { TbFileDollar } from "react-icons/tb";
-import TrashDeleteIcon from "../atoms/TrashDeleteicon";
-//import { Fa0, Fa1, Fa2, Fa3 } from "react-icons/fa6";
+
 const GetStoredExpenseData = () => {
   const { hasSubmitted, setHasSubmitted } = useContext(ExpensesContext);
   const [fetchedJsonData, setFetchedJsonData] = useState([]);
   const [_, setServerData] = useState([]);
+  const [isHovered, setIsHovered] = useState(false);
   //const [isIconExpanded, setIsIconExpanded] = useState(null);
+  // Mouse hover event handlers
+  const handleMouseEnter = () => {
+    setIsHovered(true);
+  };
+
+  const handleMouseLeave = () => {
+    setIsHovered(false);
+  };
+  //Ternary statement cor hover styles
+  const textColor = isHovered
+    ? { backgroundColor: "lightgray", borderBottom: ".2vh solid pink", cursor: "pointer" }
+    : { backgroundColor: "transparent" };
   const categoryIcon = <TbFileDollar className="tbdollar-icon" />;
 
   useEffect(() => {
@@ -41,7 +53,6 @@ const GetStoredExpenseData = () => {
       console.error("Error deleting data", error);
     }
   };
-
   const iconDelete = (id) => {
     const stringifiedFetchedJsonData = JSON.stringify(fetchedJsonData);
     localStorage.setItem("fetchedJsonData", stringifiedFetchedJsonData);
@@ -53,20 +64,18 @@ const GetStoredExpenseData = () => {
     setFetchedJsonData(updatedFetchedJsonData);
     deleteDataBaseJsonObject(id);
   };
-
+  // getStoredExpenseData return statement for jsx display
   return (
     <ul>
       {fetchedJsonData.map((jsonObject) => {
         return (
-          <li key={jsonObject._id}>
-            <a href={`/details/${jsonObject._id}`} style={{ fontSize: "1.3em" }}>
-              {categoryIcon}
-            </a>
-
-            <button onClick={() => iconDelete(jsonObject._id)} className="btn btn-primary btn-sm">
-              <TrashDeleteIcon />
-            </button>
-          </li>
+          <section onMouseEnter={handleMouseEnter} onMouseLeave={handleMouseLeave} style={textColor}>
+            <li key={jsonObject._id}>
+              <a href={`/details/${jsonObject._id}`} onClick={(e) => e.preventDefault()}>
+                {categoryIcon}
+              </a>
+            </li>
+          </section>
         );
       })}
     </ul>
@@ -74,3 +83,5 @@ const GetStoredExpenseData = () => {
 };
 
 export default GetStoredExpenseData;
+//  onClick={(e) => e.preventDefault()} keeps anything from being submitted not just forms
+//<button onClick={() => iconDelete(jsonObject._id)}>delete</button>

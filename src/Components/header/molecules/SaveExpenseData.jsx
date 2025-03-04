@@ -7,7 +7,7 @@ export const SaveExpenseData = () => {
 
   const handleButtonClick = async (event) => {
     await handleJsonSubmit(event); // Sends data to MongoDB
-    console.log("JSON Data was sent!");
+    console.log("JSON Data was sent or no Data was present!");
     console.log(JSON.parse(localStorage.getItem("storedExpensesData")) || "No Data!");
   };
 

@@ -1,6 +1,8 @@
 import React from "react";
+//import { useState } from "react";
 import FileGridIcon from "../atoms/FileGridIcon";
 import FileColumnsIcon from "../atoms/FileColumnsIcon";
+import TrashDeleteIcon from "../atoms/TrashDeleteicon";
 import GetStoredExpenseData from "../molecules/GetStoredExpenseData";
 import "../styles/SideBar.css";
 const SideBar = () => {
@@ -9,8 +11,11 @@ const SideBar = () => {
       <section className="sidebar-icons-container">
         <FileGridIcon />
         <FileColumnsIcon />
+        <TrashDeleteIcon />
       </section>
-      <GetStoredExpenseData />
+      <section>
+        <GetStoredExpenseData />
+      </section>
     </div>
   );
 };

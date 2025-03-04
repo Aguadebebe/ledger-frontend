@@ -1,17 +1,22 @@
 import "../styles/ExpenseForm.css";
 import { useEffect } from "react";
+import { useContext } from "react";
+import { ExpensesContext } from "../../ContextProvider";
+
 import FormInput from "../atoms/FormInput";
 import Description from "../atoms/Description";
 import InputDate from "../atoms/InputDate";
 import DropdownSelect from "../atoms/DropdownSelect";
 import AddExpenseBtn from "../atoms/AddExpenseBtn";
 const ExpenseForm = (props) => {
+  const { mistake } = useContext(ExpensesContext);
   useEffect(() => {
     console.log("Expense Category updated:", props.expenseCategory);
   }, [props.expenseCategory]); // Logs whenever `expenseCategory` is updated
 
   return (
     <section className="form-border">
+      {mistake && <p style={{ color: "red", fontSize: "1.4vh" }}>{mistake}</p>}
       <form className="d-flex flex-column" onSubmit={props.handleFormSubmit}>
         <fieldset>
           <legend>Expense Form -</legend>
