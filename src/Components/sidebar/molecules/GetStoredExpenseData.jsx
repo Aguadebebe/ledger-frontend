@@ -69,8 +69,13 @@ const GetStoredExpenseData = () => {
     <ul>
       {fetchedJsonData.map((jsonObject) => {
         return (
-          <section onMouseEnter={handleMouseEnter} onMouseLeave={handleMouseLeave} style={textColor}>
-            <li key={jsonObject._id}>
+          <section
+            onMouseEnter={handleMouseEnter}
+            onMouseLeave={handleMouseLeave}
+            style={textColor}
+            key={jsonObject._id} // The key prop for child elements needs to be on the outer most element in this case section instead of li
+          >
+            <li>
               <a href={`/details/${jsonObject._id}`} onClick={(e) => e.preventDefault()}>
                 {categoryIcon}
               </a>

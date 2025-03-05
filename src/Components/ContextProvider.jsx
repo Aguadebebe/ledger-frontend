@@ -22,21 +22,15 @@ const ContextProvider = ({ children }) => {
       return;
     }
     setMistake(""); //same as error lol
+
     try {
-      //For of loop - loops through expense objects in local storage and sets their props fo axios post
-      for (const newStoredExpense of newStoredExpenses) {
-        console.log("Sending data to server from localStorage:", newStoredExpense);
+      console.log("Sending all the data to server from localStorage:", newStoredExpenses);
 
-        const response = await Axios.post("http://localhost:8080/register", {
-          title: newStoredExpense.title,
-          description: newStoredExpense.description,
-          amount: newStoredExpense.amount,
-          date: newStoredExpense.date,
-          category: newStoredExpense.category
-        });
-
-        console.log("Data saved successfully:", response.data);
-      }
+      const response = await Axios.post("http://localhost:8080/register", {
+        expenses: newStoredExpenses // Sends the entire newStoredExpenses array of all items to the db!
+        //expenses: [{ title: "Test Expense", description: "test", amount: 100, category: "Food" }]
+      });
+      console.log("Data saved successfully:", response.data);
 
       localStorage.removeItem("storedExpensesData"); //clears localstorage
       setHasSubmitted(true); // sets hasSubmitted to true making it return if there is no data to submit
@@ -68,3 +62,15 @@ const ContextProvider = ({ children }) => {
 };
 
 export default ContextProvider;
+
+/** //For of loop - loops through expense objects in local storage and sets their props fo axios post
+      for (const newStoredExpense of newStoredExpenses) {
+        console.log("Sending data to server from localStorage:", newStoredExpense);
+
+        const response = await Axios.post("http://localhost:8080/register", {
+          title: newStoredExpense.title,
+          description: newStoredExpense.description,
+          amount: newStoredExpense.amount,
+          date: newStoredExpense.date,
+          category: newStoredExpense.category
+        });*/
