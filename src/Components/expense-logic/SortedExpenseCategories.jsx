@@ -6,7 +6,7 @@ export const SortedExpenseCategories = ({ selectedCategory }) => {
   const { expenses } = useContext(ExpensesContext);
   const validCategories = ["Bills", "Auto Parts", "Groceries"];
 
-  const groupedExpenses = expenses.reduce((acc, expense, index) => {
+  const groupedExpenses = expenses.reduce((acc, expense) => {
     const updatedAcc = {
       ...acc,
       [expense.category]: [...(acc[expense.category] || []), expense]

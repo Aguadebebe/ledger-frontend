@@ -25,7 +25,7 @@ const Filter = (props) => {
               }, 0);
 
               return (
-                <div key={category}>
+                <section key={category}>
                   <h3>{category}</h3>
                   <ul>
                     {props.groupedExpenses[category].map((expense) => {
@@ -43,7 +43,7 @@ const Filter = (props) => {
                     <strong className="strong-category">Total for {category}:</strong>
                     <strong className="strong-cat-total">${categoryTotal.toFixed(2)}</strong>
                   </p>
-                </div>
+                </section>
               );
             })}
         </ul>

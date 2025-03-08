@@ -8,6 +8,9 @@ const ContextProvider = ({ children }) => {
   const [expenses, setExpenses] = useState([]);
   const [hasSubmitted, setHasSubmitted] = useState(false);
   const [mistake, setMistake] = useState("");
+  const [fetchedJsonData, setFetchedJsonData] = useState([]);
+  const [selectedId, setSelectedId] = useState(null);
+  const [_, setServerData] = useState([]);
   const clearDisplayedExpenses = () => {
     setExpenses([]);
   };
@@ -42,19 +45,73 @@ const ContextProvider = ({ children }) => {
       console.error("There was an error:", error);
     }
   };
+
+  const handleSelectedId = (id) => {
+    setSelectedId(id);
+  };
+  // new logic
+  const fetchedEffect = async (hasSubmitted, setHasSubmitted, setFetchedJsonData) => {
+    if (!hasSubmitted) return;
+    console.log("fetchData is being triggered because hasSubmitted changed:", hasSubmitted);
+
+    try {
+      const response = await Axios.get("http://localhost:8080/data");
+      setFetchedJsonData(response.data);
+      console.log(response.data);
+      console.log(window.localStorage);
+    } catch (error) {
+      console.error("error fetching response data", error);
+    } finally {
+      setHasSubmitted(false); //  Reset flag after fetching
+      console.log("hasSubmitted reset to false, fetchData should not trigger again unless resubmitted.");
+    }
+  };
+
+  const deleteDataBaseJsonObject = async (id) => {
+    try {
+      const response = await Axios.delete(`http://localhost:8080/delete/${id}`);
+      setServerData(response.data.message);
+      console.log(response.data.message);
+    } catch (error) {
+      console.error("Error deleting data", error);
+    }
+  };
+  const iconDelete = (id) => {
+    // First, check if the ID is valid
+    if (!selectedId) {
+      console.log(" No ID provided for deletion. Stopping delete function.");
+      setMistake("No Expenses, must have Expenses to delete!");
+      return; // Stop here if no valid ID exists
+    }
+    const stringifiedFetchedJsonData = JSON.stringify(fetchedJsonData);
+    localStorage.setItem("fetchedJsonData", stringifiedFetchedJsonData);
+    const storedData = JSON.parse(localStorage.getItem("fetchedJsonData")) || [];
+
+    console.log("storedData Retrieved:", storedData);
+
+    const updatedFetchedJsonData = storedData.filter((jsonObject) => jsonObject._id !== id);
+    setFetchedJsonData(updatedFetchedJsonData);
+    deleteDataBaseJsonObject(id);
+
+    return;
+  };
+  const contextEventHandlers = { handleSelectedId, handleJsonSubmit, fetchedEffect };
+  const contextDeleteFunctions = { clearDisplayedExpenses, iconDelete, deleteDataBaseJsonObject };
+  const contextStateValues = {
+    expenses,
+    setExpenses,
+    hasSubmitted,
+    setHasSubmitted,
+    mistake,
+    selectedId,
+    setSelectedId,
+    fetchedJsonData,
+    setFetchedJsonData
+  };
   // Return statement for the CP component for jsx
   return (
     <ExpensesContext.Provider
-      value={{
-        // this prop halds the variables being carried by useContext
-        expenses,
-        setExpenses,
-        clearDisplayedExpenses,
-        handleJsonSubmit,
-        hasSubmitted,
-        setHasSubmitted,
-        mistake
-      }}
+      value={{ ...contextStateValues, ...contextDeleteFunctions, ...contextEventHandlers }} // this prop holds the variables being carried by useContext}}
     >
       {children}
     </ExpensesContext.Provider>
