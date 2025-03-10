@@ -7,12 +7,17 @@ import { SortedExpenseCategories } from "./SortedExpenseCategories";
 import { StoredExpenses } from "./StoredExpenses";
 
 const Expense = () => {
-  const { expenses, setExpenses } = useContext(ExpensesContext);
+  const { expenses, setExpenses, fetchedExpenses, setFetchedExpenses } = useContext(ExpensesContext);
   const selectedCategory = "";
   // Event Handlers
-
+  const clearFetchedExpense = () => {
+    localStorage.removeItem("fetchedJsonData");
+  };
   const onDelete = (id) => {
     setExpenses(expenses.filter((expense) => expense.id !== id));
+    setFetchedExpenses(fetchedExpenses.filter((fetchedExpense) => fetchedExpense.id !== id));
+    clearFetchedExpense();
+    console.log("Updated fetchedJsonData state in localStorage:", fetchedExpenses);
   };
 
   return (

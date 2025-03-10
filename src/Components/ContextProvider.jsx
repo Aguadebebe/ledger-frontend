@@ -1,5 +1,5 @@
 //Import Dependencies
-import { useState, createContext } from "react";
+import { useState, useEffect, createContext } from "react";
 import Axios from "axios";
 export const ExpensesContext = createContext();
 //Define ContextProvider - The children prop enables passing variables defined in CP to anywhere in the app
@@ -9,13 +9,61 @@ const ContextProvider = ({ children }) => {
   const [hasSubmitted, setHasSubmitted] = useState(false);
   const [mistake, setMistake] = useState("");
   const [fetchedJsonData, setFetchedJsonData] = useState([]);
+  const [fetchedExpenses, setFetchedExpenses] = useState([]);
   const [selectedId, setSelectedId] = useState(null);
   const [_, setServerData] = useState([]);
   const clearDisplayedExpenses = () => {
     setExpenses([]);
   };
-  //Define handleJsonSubmit to post all the Expense data from local storage
+  useEffect(() => {
+    console.log("Updated fetchedJsonData state in localStorage:", fetchedJsonData);
+  }, [fetchedJsonData]); // Runs every time expenses changes
+  useEffect(() => {
+    console.log("Updated fetchedExpenses state in localStorage:", fetchedExpenses);
+  }, [fetchedExpenses]); // Runs every time expenses changes
+
   const handleJsonSubmit = async (event) => {
+    if (hasSubmitted) return; // Prevents multiple submissions
+    console.log("handleJsonSubmit triggered!");
+
+    const expensesToSend = JSON.parse(localStorage.getItem("storedExpensesData")) || [];
+
+    if (expensesToSend.length === 0) {
+      setMistake("No Expenses found, Must have Expenses to Post!");
+      console.error("No data to send!");
+      return;
+    }
+
+    setMistake(""); // Clears any previous errors
+
+    const submissionData = {
+      batchId: Date.now(), // Generates a unique batch ID for each submission
+      expenses: expensesToSend
+    };
+
+    try {
+      console.log("Sending data to server:", submissionData);
+
+      const response = await Axios.post("http://localhost:8080/register", submissionData);
+
+      if (response.status === 201) {
+        console.log("Data successfully saved:", response.data);
+
+        localStorage.removeItem("storedExpensesData"); // Clears localStorage after successful submission
+        setHasSubmitted(true); // Prevents resubmission
+
+        console.log("Local storage cleared, hasSubmitted set to true!");
+        clearDisplayedExpenses(); // Clears UI after post
+      } else {
+        throw new Error("Failed to save data");
+      }
+    } catch (error) {
+      console.error("There was an error:", error);
+    }
+  };
+
+  //Define handleJsonSubmit to post all the Expense data from local storage
+  /**  const handleJsonSubmit = async (event) => {
     if (hasSubmitted) return; // equates to truthy which returns false, it's initial value if it is the first render and hasSubmitted is false
     console.log("handleJsonSubmit triggered!");
     const newStoredExpenses = JSON.parse(localStorage.getItem("storedExpensesData")) || [];
@@ -44,7 +92,15 @@ const ContextProvider = ({ children }) => {
     } catch (error) {
       console.error("There was an error:", error);
     }
-  };
+  };*/
+
+  /**const handleJsonDisplay = () => {
+    const newStoredFetchedJsonData = JSON.parse(localStorage.getItem("fetchedJsonData")) || [];
+    const extractedExpenses = newStoredFetchedJsonData.flatMap((item) => item.expenses || []);
+
+    setFetchedExpenses(extractedExpenses);
+  };*/
+  const allExpenses = [...expenses, ...fetchedExpenses];
 
   const handleSelectedId = (id) => {
     setSelectedId(id);
@@ -67,9 +123,9 @@ const ContextProvider = ({ children }) => {
     }
   };
 
-  const deleteDataBaseJsonObject = async (id) => {
+  const deleteDataBaseJsonObject = async (batchId) => {
     try {
-      const response = await Axios.delete(`http://localhost:8080/delete/${id}`);
+      const response = await Axios.delete(`http://localhost:8080/delete/${batchId}`);
       setServerData(response.data.message);
       console.log(response.data.message);
     } catch (error) {
@@ -77,11 +133,50 @@ const ContextProvider = ({ children }) => {
     }
   };
   const iconDelete = (id) => {
+    if (!id) {
+      console.log("No ID provided for deletion. Stopping delete function.");
+      setMistake("No Expenses, must have Expenses to delete!");
+      return;
+    }
+
+    // Find the object that matches the ID to extract its batchId
+    const expenseToDelete = fetchedJsonData.find((expense) => expense._id === id);
+
+    if (!expenseToDelete) {
+      console.error("Expense not found in fetchedJsonData!");
+      return;
+    }
+
+    const batchId = expenseToDelete.batchId; // Extract batchId from the matching expense
+
+    if (!batchId) {
+      console.error("batchId is undefined! Cannot delete batch.");
+      return;
+    }
+
+    console.log("Deleting expense with ID:", id, "from batch:", batchId);
+
+    // Store the current data in localStorage (optional, if needed)
+    localStorage.setItem("fetchedJsonData", JSON.stringify(fetchedJsonData));
+
+    // Filter out the deleted expense and update state
+    const updatedFetchedJsonData = fetchedJsonData.filter((jsonObject) => jsonObject._id !== id);
+    setFetchedJsonData(updatedFetchedJsonData);
+
+    // Call the backend delete function with the correct batchId
+    deleteDataBaseJsonObject(batchId);
+  };
+
+  /**const iconDelete = (id) => {
     // First, check if the ID is valid
     if (!selectedId) {
       console.log(" No ID provided for deletion. Stopping delete function.");
       setMistake("No Expenses, must have Expenses to delete!");
       return; // Stop here if no valid ID exists
+    }
+    if (!batchId) {
+      console.error("batchId is undefined! Cannot delete batch.");
+      return;
     }
     const stringifiedFetchedJsonData = JSON.stringify(fetchedJsonData);
     localStorage.setItem("fetchedJsonData", stringifiedFetchedJsonData);
@@ -92,12 +187,14 @@ const ContextProvider = ({ children }) => {
     const updatedFetchedJsonData = storedData.filter((jsonObject) => jsonObject._id !== id);
     setFetchedJsonData(updatedFetchedJsonData);
     deleteDataBaseJsonObject(id);
-
     return;
-  };
+  };*/
   const contextEventHandlers = { handleSelectedId, handleJsonSubmit, fetchedEffect };
   const contextDeleteFunctions = { clearDisplayedExpenses, iconDelete, deleteDataBaseJsonObject };
   const contextStateValues = {
+    fetchedExpenses,
+    setFetchedExpenses,
+    allExpenses,
     expenses,
     setExpenses,
     hasSubmitted,

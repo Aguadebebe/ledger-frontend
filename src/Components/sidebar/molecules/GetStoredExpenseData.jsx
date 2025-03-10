@@ -5,8 +5,16 @@ import "../styles/SideBar.css";
 import { TbFileDollar } from "react-icons/tb";
 
 const GetStoredExpenseData = () => {
-  const { hasSubmitted, setHasSubmitted, fetchedJsonData, setFetchedJsonData, fetchedEffect, handleSelectedId } =
-    useContext(ExpensesContext);
+  const {
+    hasSubmitted,
+    setHasSubmitted,
+    fetchedExpenses,
+    fetchedJsonData,
+    setFetchedJsonData,
+    fetchedEffect,
+    handleSelectedId,
+    handleJsonDisplay
+  } = useContext(ExpensesContext);
 
   // const [_, setServerData] = useState([]);
 
@@ -70,3 +78,4 @@ const GetStoredExpenseData = () => {
 export default GetStoredExpenseData;
 //  onClick={(e) => e.preventDefault()} keeps anything from being submitted not just forms
 //<button onClick={() => iconDelete(jsonObject._id)}>delete</button>
+// onClick={() => handleJsonDisplay(fetchedExpenses)}

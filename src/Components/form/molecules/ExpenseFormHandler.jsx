@@ -4,7 +4,6 @@ import ExpenseForm from "../oranisms/ExpenseForm";
 
 const ExpenseFormHandler = () => {
   const { expenses, setExpenses } = useContext(ExpensesContext);
-  // Move the state to App component
   const [expenseTitle, setExpenseTitle] = useState("");
   const [expenseDescription, setExpenseDescription] = useState("");
   const [expenseAmount, setExpenseAmount] = useState("");
@@ -52,7 +51,6 @@ const ExpenseFormHandler = () => {
     };
 
     onAddExpense(newExpense);
-    //onAddFileJsonData(newExpense);
 
     // Reset form state
     setExpenseTitle("");
